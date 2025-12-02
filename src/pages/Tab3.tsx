@@ -1,13 +1,25 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Tab3.css';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/react";
+import {
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
+} from "@ionic/react";
+import "./Tab3.css";
 
 const Tab3: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 3</IonTitle>
+          <IonTitle>Usuario</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -16,7 +28,22 @@ const Tab3: React.FC = () => {
             <IonTitle size="large">Tab 3</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Tab 3 page" />
+        <div className="card-container">
+          <IonCard>
+            <img
+              alt="Silhouette of mountains"
+              src="https://ionicframework.com/docs/img/demos/card-media.png"
+            />
+            <IonCardHeader>
+              <IonCardTitle>Esteban Villegas</IonCardTitle>
+              <IonCardSubtitle>evillegas802</IonCardSubtitle>
+            </IonCardHeader>
+
+            <IonCardContent>
+              Este es el perfil de Esteban Andres Villegas Guerra
+            </IonCardContent>
+          </IonCard>
+        </div>
       </IonContent>
     </IonPage>
   );
