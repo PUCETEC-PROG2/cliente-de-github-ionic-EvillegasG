@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonSpinner, IonNote } from '@ionic/react';
+import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonSpinner, IonNote, IonRefresher, IonRefresherContent } from '@ionic/react';
 import { useState, useEffect } from 'react';
 import './Tab1.css';
 import RepoItem from '../components/RepoItem';
@@ -12,23 +12,32 @@ const Tab1: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchRepositories = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const repos = await getUserRepositories(GITHUB_USERNAME);
-        setRepositories(repos);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch repositories');
-        setRepositories([]);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Función para cargar repositorios
+  const fetchRepositories = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const repos = await getUserRepositories(GITHUB_USERNAME);
+      setRepositories(repos);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch repositories');
+      setRepositories([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  // Cargar repositorios al montar componente
+  useEffect(() => {
     fetchRepositories();
   }, []);
+
+  // Manejador de refresco (pull-to-refresh)
+  const handleRefresh = (event: CustomEvent) => {
+    fetchRepositories().then(() => {
+      (event.detail as any).complete();
+    });
+  };
 
   return (
     <IonPage>
@@ -38,6 +47,10 @@ const Tab1: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
+        <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+          <IonRefresherContent></IonRefresherContent>
+        </IonRefresher>
+
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Mis Repositorios</IonTitle>

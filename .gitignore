@@ -30,3 +30,6 @@ yarn-error.log*
 # Optional eslint cache
 .eslintcache
 .env
+
+# GitHub token configuration - DO NOT UPLOAD
+src/config/githubConfig.ts
