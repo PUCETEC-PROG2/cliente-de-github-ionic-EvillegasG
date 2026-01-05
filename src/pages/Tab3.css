@@ -1,11 +1,11 @@
 .card-container {
-	min-height: 100%;
+	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 16px;
-	padding: 16px;
+	gap: 1rem;
+	padding: 1rem;
 }
 
 .card {
@@ -18,6 +18,7 @@
 	height: auto;
 	max-height: 400px;
 	object-fit: cover;
+	border-radius: 8px;
 }
 
 .bio {
@@ -25,6 +26,8 @@
 	color: var(--ion-color-medium);
 	margin: 1rem 0;
 	line-height: 1.5;
+	font-size: 0.95rem;
+	word-break: break-word;
 }
 
 .user-info-grid {
@@ -42,10 +45,11 @@
 	flex-direction: column;
 	align-items: center;
 	gap: 0.5rem;
+	padding: 0.5rem;
 }
 
 .info-item .label {
-	font-size: 0.85rem;
+	font-size: 0.75rem;
 	color: var(--ion-color-medium);
 	text-transform: uppercase;
 	letter-spacing: 0.5px;
@@ -68,27 +72,31 @@
 .detail-row strong {
 	color: var(--ion-color-dark);
 	display: block;
+	font-size: 0.95rem;
 }
 
 .detail-row span,
 .detail-row a {
 	color: var(--ion-color-medium);
 	word-break: break-word;
+	font-size: 0.9rem;
+	line-height: 1.4;
 }
 
 .detail-row a {
 	color: var(--ion-color-primary);
 	text-decoration: none;
+	font-size: 0.9rem;
 }
 
-.detail-row a:hover {
-	text-decoration: underline;
+.detail-row a:active {
+	opacity: 0.7;
 }
 
 .action-buttons {
 	display: flex;
-	justify-content: center;
-	gap: 1rem;
+	flex-direction: column;
+	gap: 0.75rem;
 	margin: 1.5rem 0;
 }
 
@@ -97,10 +105,16 @@
 	cursor: pointer;
 	border-radius: 20px;
 	transition: transform 0.2s ease;
+	font-size: 0.95rem;
+	min-height: 44px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-.badge-link:hover {
-	transform: scale(1.05);
+.badge-link:active {
+	transform: scale(0.98);
+	opacity: 0.8;
 }
 
 .timestamp {
@@ -121,23 +135,181 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	height: 60vh;
+	min-height: 40vh;
 	gap: 1rem;
+	padding: 1.5rem;
 }
 
 .loading-container p {
 	color: var(--ion-color-medium);
-	font-size: 1rem;
+	font-size: 0.95rem;
+	margin: 0;
 }
 
 .error-container {
-	padding: 2rem 1rem;
-	margin: 1rem;
+	padding: 1rem;
+	margin: 0.5rem;
 	border-radius: 8px;
 	background-color: var(--ion-color-danger-tint);
+	border-left: 4px solid var(--ion-color-danger);
 }
 
 .error-container ion-note {
 	display: block;
 	word-break: break-word;
+	font-size: 0.95rem;
+	line-height: 1.5;
+}
+
+/* Mobile First - Small phones */
+@media (max-width: 480px) {
+	.card-container {
+		gap: 0.75rem;
+		padding: 0.75rem;
+	}
+
+	.user-avatar {
+		max-height: 300px;
+	}
+
+	.bio {
+		margin: 0.75rem 0;
+		font-size: 0.9rem;
+	}
+
+	.user-info-grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 0.75rem;
+		margin: 1rem 0;
+		padding: 0.75rem 0;
+	}
+
+	.info-item {
+		padding: 0.25rem;
+	}
+
+	.info-item .label {
+		font-size: 0.7rem;
+	}
+
+	.info-item .value {
+		font-size: 1.25rem;
+	}
+
+	.detail-row {
+		margin: 0.75rem 0;
+		padding: 0.25rem 0;
+	}
+
+	.detail-row strong {
+		font-size: 0.9rem;
+	}
+
+	.detail-row span,
+	.detail-row a {
+		font-size: 0.85rem;
+	}
+
+	.action-buttons {
+		flex-direction: column;
+		gap: 0.5rem;
+		margin: 1rem 0;
+	}
+
+	.badge-link {
+		padding: 0.75rem 1rem;
+		font-size: 0.9rem;
+		min-height: 44px;
+	}
+
+	.loading-container {
+		min-height: 35vh;
+		padding: 1rem;
+	}
+
+	.error-container {
+		padding: 0.75rem;
+		margin: 0.25rem;
+	}
+}
+
+/* Tablet */
+@media (min-width: 481px) and (max-width: 768px) {
+	.card-container {
+		gap: 1rem;
+		padding: 1rem;
+	}
+
+	.user-avatar {
+		max-height: 350px;
+	}
+
+	.user-info-grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+	}
+
+	.info-item .label {
+		font-size: 0.8rem;
+	}
+
+	.info-item .value {
+		font-size: 1.4rem;
+	}
+
+	.action-buttons {
+		flex-direction: row;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+
+	.badge-link {
+		min-height: 44px;
+		padding: 0.75rem 1.5rem;
+	}
+}
+
+/* Desktop */
+@media (min-width: 769px) {
+	.card-container {
+		gap: 1.5rem;
+		padding: 2rem;
+	}
+
+	.user-info-grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.5rem;
+		margin: 2rem 0;
+		padding: 1.5rem 0;
+	}
+
+	.info-item .label {
+		font-size: 0.85rem;
+	}
+
+	.info-item .value {
+		font-size: 1.8rem;
+	}
+
+	.action-buttons {
+		flex-direction: row;
+		justify-content: center;
+		gap: 1.5rem;
+	}
+
+	.badge-link {
+		padding: 1rem 2rem;
+		font-size: 1rem;
+		min-height: 48px;
+	}
+
+	.loading-container {
+		min-height: 50vh;
+	}
+
+	.error-container {
+		max-width: 700px;
+		margin: 2rem auto;
+	}
 }

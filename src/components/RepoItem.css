@@ -1,30 +1,144 @@
 .repo-item {
   border-bottom: 1px solid var(--ion-color-light);
+  padding: 1rem;
 }
 
 .repo-header {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .repo-header h2 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 600;
+  word-break: break-word;
+  flex: 1;
+  min-width: 200px;
 }
 
 .repo-stats {
   display: flex;
   gap: 1rem;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
   font-size: 0.85rem;
   color: var(--ion-color-medium);
+  flex-wrap: wrap;
 }
 
 ion-label p {
-  margin: 0.5rem 0 0 0;
+  margin: 0.75rem 0 0 0;
   color: var(--ion-color-medium);
   font-size: 0.9rem;
+  line-height: 1.4;
+  word-break: break-word;
 }
+
+.repo-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--ion-color-light);
+}
+
+.repo-actions ion-button {
+  --padding-start: 0;
+  --padding-end: 0;
+  --min-width: 44px;
+  --min-height: 44px;
+}
+
+.repo-actions ion-button:active {
+  opacity: 0.7;
+}
+
+/* Mobile First - Small phones */
+@media (max-width: 480px) {
+  .repo-item {
+    padding: 0.75rem;
+  }
+
+  .repo-header {
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .repo-header h2 {
+    font-size: 0.95rem;
+    min-width: 150px;
+  }
+
+  .repo-stats {
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  ion-label p {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.85rem;
+  }
+
+  .repo-actions {
+    gap: 0.25rem;
+    margin-top: 0.75rem;
+    padding-top: 0.5rem;
+  }
+
+  .repo-actions ion-button {
+    --min-width: 40px;
+    --min-height: 40px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 481px) and (max-width: 768px) {
+  .repo-item {
+    padding: 1rem;
+  }
+
+  .repo-header h2 {
+    font-size: 1rem;
+  }
+
+  .repo-stats {
+    gap: 1.25rem;
+    font-size: 0.85rem;
+  }
+
+  .repo-actions ion-button {
+    --min-width: 44px;
+    --min-height: 44px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 769px) {
+  .repo-item {
+    padding: 1.25rem;
+  }
+
+  .repo-header {
+    gap: 1.5rem;
+  }
+
+  .repo-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .repo-stats {
+    gap: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .repo-actions ion-button {
+    --min-width: 48px;
+    --min-height: 48px;
+  }
+}
+

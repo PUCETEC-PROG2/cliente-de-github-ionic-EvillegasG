@@ -144,3 +144,110 @@ export const createRepository = async (
     throw new Error('Error al crear el repositorio. Por favor, intenta de nuevo.');
   }
 };
+
+// Interface for updating a repository
+export interface UpdateRepositoryRequest {
+  name?: string;
+  description?: string;
+  private?: boolean;
+  homepage?: string;
+  has_wiki?: boolean;
+  has_issues?: boolean;
+  has_projects?: boolean;
+}
+
+/**
+ * Update an existing repository
+ * PATCH /repos/{owner}/{repo}
+ * @param owner - Repository owner (GitHub username)
+ * @param repo - Repository name
+ * @param updateData - Fields to update
+ * @param token - GitHub personal access token
+ * @returns Promise with updated repository
+ */
+export const updateRepository = async (
+  owner: string,
+  repo: string,
+  updateData: UpdateRepositoryRequest,
+  token: string
+): Promise<Repository> => {
+  try {
+    const authenticatedApi = axios.create({
+      baseURL: 'https://api.github.com',
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+      },
+    });
+
+    const response = await authenticatedApi.patch<Repository>(
+      `/repos/${owner}/${repo}`,
+      updateData
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Error updating repository:', error);
+    
+    if (axios.isAxiosError(error) && error.response) {
+      const status = error.response.status;
+      const data = error.response.data as any;
+      
+      if (status === 401) {
+        throw new Error('Token inválido. Por favor, verifica tu token de GitHub.');
+      } else if (status === 422) {
+        throw new Error(data.message || 'Datos inválidos. Verifica los campos del repositorio.');
+      } else if (status === 403) {
+        throw new Error('No tienes permisos para editar este repositorio.');
+      } else if (status === 404) {
+        throw new Error('Repositorio no encontrado.');
+      }
+    }
+    
+    throw new Error('Error al actualizar el repositorio. Por favor, intenta de nuevo.');
+  }
+};
+
+/**
+ * Delete a repository
+ * DELETE /repos/{owner}/{repo}
+ * @param owner - Repository owner (GitHub username)
+ * @param repo - Repository name
+ * @param token - GitHub personal access token
+ * @returns Promise that resolves when repository is deleted
+ * 
+ * WARNING: This action cannot be undone!
+ */
+export const deleteRepository = async (
+  owner: string,
+  repo: string,
+  token: string
+): Promise<void> => {
+  try {
+    const authenticatedApi = axios.create({
+      baseURL: 'https://api.github.com',
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+      },
+    });
+
+    await authenticatedApi.delete(`/repos/${owner}/${repo}`);
+  } catch (error) {
+    console.error('Error deleting repository:', error);
+    
+    if (axios.isAxiosError(error) && error.response) {
+      const status = error.response.status;
+      
+      if (status === 401) {
+        throw new Error('Token inválido. Por favor, verifica tu token de GitHub.');
+      } else if (status === 403) {
+        throw new Error('No tienes permisos para eliminar este repositorio.');
+      } else if (status === 404) {
+        throw new Error('Repositorio no encontrado.');
+      }
+    }
+    
+    throw new Error('Error al eliminar el repositorio. Por favor, intenta de nuevo.');
+  }
+};

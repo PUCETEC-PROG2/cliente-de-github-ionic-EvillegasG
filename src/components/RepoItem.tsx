@@ -5,11 +5,16 @@ import {
   IonLabel,
   IonThumbnail,
   IonBadge,
+  IonButton,
+  IonIcon,
 } from '@ionic/react';
+import { create, trash } from 'ionicons/icons';
 import { Repository } from '../services/githubService';
 
 interface RepoProps extends Repository {
   imageUrl?: string;
+  onEdit?: (repo: Repository) => void;
+  onDelete?: (repo: Repository) => void;
 }
 
 const RepoItem: React.FC<RepoProps> = ({ 
@@ -18,13 +23,29 @@ const RepoItem: React.FC<RepoProps> = ({
   stargazers_count, 
   language, 
   owner,
-  html_url
+  html_url,
+  onEdit,
+  onDelete,
+  ...repoData
 }) => {
+  const repo = { name, description, stargazers_count, language, owner, html_url, ...repoData };
+
+  const handleEditClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onEdit) {
+      onEdit(repo as Repository);
+    }
+  };
+
+  const handleDeleteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onDelete) {
+      onDelete(repo as Repository);
+    }
+  };
+
   return (
     <IonItem 
-      button 
-      detail
-      onClick={() => window.open(html_url, '_blank')}
       className="repo-item"
     >
       <IonThumbnail slot="start">
@@ -33,7 +54,7 @@ const RepoItem: React.FC<RepoProps> = ({
           src={owner?.avatar_url || "https://ionicframework.com/docs/img/demos/thumbnail.svg"} 
         />
       </IonThumbnail>
-      <IonLabel>
+      <IonLabel onClick={() => window.open(html_url, '_blank')}>
         <div className="repo-header">
           <h2>{name}</h2>
           {language && <IonBadge color="primary">{language}</IonBadge>}
@@ -43,6 +64,28 @@ const RepoItem: React.FC<RepoProps> = ({
           <span>⭐ {stargazers_count} stars</span>
         </div>
       </IonLabel>
+      <div slot="end" className="repo-actions">
+        {onEdit && (
+          <IonButton 
+            fill="clear" 
+            color="primary"
+            onClick={handleEditClick}
+            title="Editar repositorio"
+          >
+            <IonIcon slot="icon-only" icon={create}></IonIcon>
+          </IonButton>
+        )}
+        {onDelete && (
+          <IonButton 
+            fill="clear" 
+            color="danger"
+            onClick={handleDeleteClick}
+            title="Eliminar repositorio"
+          >
+            <IonIcon slot="icon-only" icon={trash}></IonIcon>
+          </IonButton>
+        )}
+      </div>
     </IonItem>
   );
 };
